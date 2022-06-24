@@ -9,7 +9,6 @@ plugins {
 
 group = "dev.patbeagan"
 version = "1.0"
-
 val githubCredentials: MavenArtifactRepository.() -> Unit = {
     credentials {
         username = project.findProperty("gpr.username") as String? ?: System.getenv("GITHUB_USERNAME")
@@ -27,7 +26,7 @@ repositories {
 dependencies {
     testImplementation(kotlin("test"))
     implementation(compose.desktop.currentOs)
-    implementation("dev.patbeagan1:protocol-rss:0.3.0")
+    implementation("dev.patbeagan1:protocol-rss:0.3.1")
 }
 
 tasks.test {
