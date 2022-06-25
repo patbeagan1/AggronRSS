@@ -12,7 +12,8 @@ version = "1.0"
 val githubCredentials: MavenArtifactRepository.() -> Unit = {
     credentials {
         username = project.findProperty("gpr.username") as String? ?: System.getenv("GITHUB_USERNAME")
-        password = project.findProperty("gpr.personal_access_token") as String? ?: System.getenv("GITHUB_PERSONAL_ACCESS_TOKEN")
+        password = project.findProperty("gpr.personal_access_token") as String?
+            ?: System.getenv("GITHUB_PERSONAL_ACCESS_TOKEN")
     }
 }
 
@@ -27,6 +28,11 @@ dependencies {
     testImplementation(kotlin("test"))
     implementation(compose.desktop.currentOs)
     implementation("dev.patbeagan1:protocol-rss:0.3.1")
+}
+val ktor_version: String by project
+dependencies {
+    implementation("io.ktor:ktor-client-core:$ktor_version")
+    implementation("io.ktor:ktor-client-cio:$ktor_version")
 }
 
 tasks.test {

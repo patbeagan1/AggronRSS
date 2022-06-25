@@ -1,4 +1,4 @@
-package dev.patbeagan.util
+package dev.patbeagan.domain
 
 import androidx.compose.ui.Modifier
 
