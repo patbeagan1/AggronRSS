@@ -20,12 +20,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.compose.ui.unit.dp
+import dev.patbeagan.data.dao.FeedItem
 
 @ExperimentalUnitApi
 @Composable
-fun SelectionPane(selectedContent: Content, setSelectedContent: (Content) -> Unit) {
+fun SelectionPane(
+    selectedContent: FeedItem?,
+    feeds: List<FeedItem>,
+    setSelectedContent: (FeedItem) -> Unit,
+) {
     var currentWidth by remember { mutableStateOf(0f) }
     val scrollState = rememberScrollState()
+
     Column(
         modifier = Modifier
             .widthIn(min = 100.dp)
@@ -40,16 +46,18 @@ fun SelectionPane(selectedContent: Content, setSelectedContent: (Content) -> Uni
             .background(Color.Yellow)
             .verticalScroll(scrollState)
     ) {
-        (1..100).forEach { each ->
+        feeds.forEach { dataFeed ->
             FeedRow(
                 FeedItem(
-                    each,
-                    "Title $each",
-                    "Desc $each"
+                    dataFeed.hashCode(),
+                    dataFeed.title,
+                    dataFeed.description
                 ),
-                selectedContent.id == each
+                selectedContent?.id == dataFeed.id
             ) {
-                setSelectedContent(Content(it.id, "Content for ${it.id}"))
+                setSelectedContent(
+                    dataFeed
+                )
             }
         }
     }

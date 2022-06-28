@@ -7,6 +7,7 @@ import org.jetbrains.exposed.dao.id.IntIdTable
 
 class Feed(id: EntityID<Int>) : IntEntity(id) {
     var title: String by FeedTable.title
+    val description: String? by FeedTable.description
     val feedItem: List<FeedItem>
         get() = FeedItem.find {
             FeedItem.FeedItemTable.feed eq id
@@ -14,21 +15,11 @@ class Feed(id: EntityID<Int>) : IntEntity(id) {
 
     object FeedTable : IntIdTable() {
         val title = varchar("title", 50)
+        val description = varchar("description", 100)
+            .nullable()
+            .default(null)
     }
 
     companion object : IntEntityClass<Feed>(FeedTable)
 }
 
-class FeedItem(id: EntityID<Int>) : IntEntity(id) {
-    var title by FeedItemTable.title
-    var description by FeedItemTable.description
-    var feed by FeedItemTable.feed
-
-    object FeedItemTable : IntIdTable() {
-        val title = varchar("title", 50)
-        val description = text("description")
-        val feed = reference("feed", Feed.FeedTable)
-    }
-
-    companion object : IntEntityClass<FeedItem>(FeedItemTable)
-}

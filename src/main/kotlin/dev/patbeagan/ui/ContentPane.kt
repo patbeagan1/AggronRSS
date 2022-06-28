@@ -18,10 +18,14 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import dev.patbeagan.data.dao.FeedItem
 import kotlinx.coroutines.launch
 
 @Composable
-fun ContentPane(snackbarHostState: SnackbarHostState, selectedContent: Content) {
+fun ContentPane(
+    snackbarHostState: SnackbarHostState,
+    selectedContent: FeedItem?,
+) {
     val scrollState = rememberScrollState()
     val scope = rememberCoroutineScope()
     Column(
@@ -37,7 +41,7 @@ fun ContentPane(snackbarHostState: SnackbarHostState, selectedContent: Content) 
         ) {
             Text("Content pane")
 
-            Text(selectedContent.content)
+            Text(selectedContent?.description ?: "NONE")
 
             Button(
                 shape = RoundedCornerShape(percent = 25),
