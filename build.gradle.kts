@@ -11,7 +11,8 @@ group = "dev.patbeagan"
 version = "1.0"
 val githubCredentials: MavenArtifactRepository.() -> Unit = {
     credentials {
-        username = project.findProperty("gpr.username") as String? ?: System.getenv("GITHUB_USERNAME")
+        username = project.findProperty("gpr.username") as String?
+            ?: System.getenv("GITHUB_USERNAME")
         password = project.findProperty("gpr.personal_access_token") as String?
             ?: System.getenv("GITHUB_PERSONAL_ACCESS_TOKEN")
     }
@@ -28,11 +29,19 @@ dependencies {
     testImplementation(kotlin("test"))
     implementation(compose.desktop.currentOs)
     implementation("dev.patbeagan1:protocol-rss:0.3.1")
+    implementation("com.h2database:h2:2.1.212")
+    implementation("org.xerial:sqlite-jdbc:3.8.11.2")
 }
 val ktor_version: String by project
 dependencies {
     implementation("io.ktor:ktor-client-core:$ktor_version")
     implementation("io.ktor:ktor-client-cio:$ktor_version")
+}
+val exposedVersion: String by project
+dependencies {
+    implementation("org.jetbrains.exposed:exposed-core:$exposedVersion")
+    implementation("org.jetbrains.exposed:exposed-dao:$exposedVersion")
+    implementation("org.jetbrains.exposed:exposed-jdbc:$exposedVersion")
 }
 
 tasks.test {

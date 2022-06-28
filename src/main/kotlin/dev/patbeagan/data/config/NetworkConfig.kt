@@ -1,4 +1,4 @@
-package dev.patbeagan.data
+package dev.patbeagan.data.config
 
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO

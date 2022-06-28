@@ -19,10 +19,16 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.ExperimentalUnitApi
-import dev.patbeagan.data.NetworkConfig
-import dev.patbeagan.data.RemoteRssDataSource
 import dev.patbeagan.data.RssRepository
+import dev.patbeagan.data.config.DatabaseConfig
+import dev.patbeagan.data.config.NetworkConfig
+import dev.patbeagan.data.dao.Feed
+import dev.patbeagan.data.dao.FeedItem
+import dev.patbeagan.data.remote.RemoteRssDataSource
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.jetbrains.exposed.sql.SchemaUtils
+import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 
 @ExperimentalUnitApi
 @Composable
@@ -30,9 +36,31 @@ import kotlinx.coroutines.launch
 fun App() {
     val repository = remember { RssRepository(RemoteRssDataSource(NetworkConfig.httpClient)) }
     val scope = rememberCoroutineScope()
+
+    DatabaseConfig.init()
+
     scope.launch {
         val fetchBasic = repository.fetchBasic()
         println(fetchBasic)
+
+        newSuspendedTransaction(Dispatchers.IO) {
+            SchemaUtils.create(Feed.FeedTable, FeedItem.FeedItemTable)
+            Feed.new { title = "Austin" }
+            // print sql to std-out
+            val newFeed = Feed.new {
+                title = "St. Petersburg"
+            }
+            FeedItem.new {
+                title = "title"
+                description = "desc"
+                feed = newFeed.id
+            }
+
+            Feed.new { title = "Boston" }
+            // 'select *' SQL: SELECT Cities.id, Cities.title FROM Cities
+            println("Cities: ${Feed.all().map { it.title + ",," + it.feedItem.joinToString(",") { it.description } }}")
+            println("Cities: ${FeedItem.all().map { it.title }}")
+        }
     }
     val scaffoldState = rememberScaffoldState()
     var selectedContent by remember { mutableStateOf(Content(-1, "default")) }
