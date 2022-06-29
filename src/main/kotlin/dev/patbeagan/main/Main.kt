@@ -12,6 +12,7 @@ import dev.patbeagan.data.dao.Feed
 import dev.patbeagan.data.dao.FeedItem
 import dev.patbeagan.data.remote.RemoteRssDataSource
 import dev.patbeagan.ui.App
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
@@ -25,11 +26,11 @@ fun main() = application {
 
         DatabaseConfig.init()
         val scope = rememberCoroutineScope()
-        scope.launch {
+        scope.launch(Dispatchers.IO) {
             val fetchBasic = repository.fetchBasic()
             println("fetchBasic")
         }
-        scope.launch {
+        scope.launch(Dispatchers.IO) {
             transaction {
                 SchemaUtils.create(Feed.FeedTable, FeedItem.FeedItemTable)
                 Feed.new { title = "Austin" }

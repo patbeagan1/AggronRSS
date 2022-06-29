@@ -46,7 +46,7 @@ fun DrawerPane(
             .verticalScroll(scrollState)
     ) {
         feeds.forEach { feed ->
-            FeedRow(
+            FeedRowItem(
                 FeedItem(
                     feed.hashCode(),
                     feed.title,

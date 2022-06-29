@@ -47,7 +47,7 @@ fun SelectionPane(
             .verticalScroll(scrollState)
     ) {
         feeds.forEach { dataFeed ->
-            FeedRow(
+            FeedRowItem(
                 FeedItem(
                     dataFeed.hashCode(),
                     dataFeed.title,

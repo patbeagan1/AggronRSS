@@ -8,31 +8,42 @@ import androidx.compose.foundation.interaction.collectIsHoveredAsState
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 
 @ExperimentalUnitApi
 @Composable
-fun FeedRow(item: FeedItem, isSelected: Boolean, setSelected: (FeedItem) -> Unit) {
+fun FeedRowItem(item: FeedItem, isSelected: Boolean, setSelected: (FeedItem) -> Unit) {
     val interactionSource = remember { MutableInteractionSource() }
     val isHovered by interactionSource.collectIsHoveredAsState()
+    val shape = RoundedCornerShape(Dp(10f))
     Row(
         Modifier
             .wrapContentHeight()
-            .background(determineBackgroundColor(isHovered, isSelected))
+            .padding(Dp(2f))
+            .shadow(Dp(2f), shape)
             .hoverable(interactionSource)
             .clickable { setSelected(item) }
+            .background(
+                determineBackgroundColor(isHovered, isSelected), shape = shape
+            )
+            .padding(Dp(4f))
     ) {
-        Column(modifier = Modifier
-            .fillMaxWidth()
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
         ) {
             Text(
                 text = item.title
@@ -46,9 +57,9 @@ fun FeedRow(item: FeedItem, isSelected: Boolean, setSelected: (FeedItem) -> Unit
 }
 
 private fun determineBackgroundColor(isHovered: Boolean, isSelected: Boolean): Color = when {
-    isSelected && isHovered -> Color.Blue
-    isSelected && !isHovered -> Color.White
+    isSelected && isHovered -> Color.LightGray.copy(blue = 1f)
+    isSelected && !isHovered -> Color.LightGray
     !isSelected && isHovered -> Color.Gray
-    !isSelected && !isHovered -> Color.LightGray
+    !isSelected && !isHovered -> Color.White
     else -> Color.Red
 }
