@@ -18,6 +18,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.compose.ui.unit.TextUnit
@@ -46,7 +47,9 @@ fun FeedRowItem(item: FeedItem, isSelected: Boolean, setSelected: (FeedItem) -> 
                 .fillMaxWidth()
         ) {
             Text(
-                text = item.title
+                text = item.title,
+                overflow = TextOverflow.Ellipsis,
+                softWrap = false
             )
             Text(
                 text = item.description,

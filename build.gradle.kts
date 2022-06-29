@@ -30,7 +30,8 @@ dependencies {
     implementation(compose.desktop.currentOs)
     implementation("dev.patbeagan1:protocol-rss:0.3.1")
     implementation("com.h2database:h2:2.1.212")
-    implementation("org.xerial:sqlite-jdbc:3.8.11.2")
+    implementation("org.xerial:sqlite-jdbc:3.36.0.3")
+    implementation("rome:rome:1.0")
 }
 val ktor_version: String by project
 dependencies {

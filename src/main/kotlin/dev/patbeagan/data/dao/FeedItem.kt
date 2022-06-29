@@ -11,7 +11,7 @@ class FeedItem(id: EntityID<Int>) : IntEntity(id) {
     var feed by FeedItemTable.feed
 
     object FeedItemTable : IntIdTable() {
-        val title = varchar("title", 50)
+        val title = varchar("title", 100)
         val description = text("description")
         val feed = reference("feed", Feed.FeedTable)
     }

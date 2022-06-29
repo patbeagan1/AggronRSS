@@ -51,7 +51,7 @@ fun SelectionPane(
                 FeedItem(
                     dataFeed.hashCode(),
                     dataFeed.title,
-                    dataFeed.description
+                    dataFeed.description.take(100)
                 ),
                 selectedContent?.id == dataFeed.id
             ) {
