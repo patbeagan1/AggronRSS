@@ -12,10 +12,9 @@ import dev.patbeagan.data.dao.Feed
 import dev.patbeagan.data.dao.FeedItem
 import dev.patbeagan.data.remote.RemoteRssDataSource
 import dev.patbeagan.ui.App
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.jetbrains.exposed.sql.SchemaUtils
-import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
+import org.jetbrains.exposed.sql.transactions.transaction
 
 @ExperimentalUnitApi
 fun main() = application {
@@ -31,7 +30,7 @@ fun main() = application {
             println("fetchBasic")
         }
         scope.launch {
-            newSuspendedTransaction(Dispatchers.IO) {
+            transaction {
                 SchemaUtils.create(Feed.FeedTable, FeedItem.FeedItemTable)
                 Feed.new { title = "Austin" }
                 // print sql to std-out
