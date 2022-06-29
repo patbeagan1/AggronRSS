@@ -61,11 +61,38 @@ fun App() {
                         .fillMaxHeight()
                         .background(Color.Blue)
                 ) {
-                    DrawerPane(selectedFeed, feeds) { selectedFeed = it }
-                    SelectionPane(selectedFeedItem, feedItems) { selectedFeedItem = it }
+                    DrawerPane(modifier = Modifier.background(Color.Green)) {
+                        feeds.forEach { feed ->
+                            FeedRowItem(
+                                FeedItem(
+                                    feed.hashCode(),
+                                    feed.title,
+                                    feed.description ?: "NONE"
+                                ),
+                                selectedFeed?.id == feed.id
+                            ) {
+                                selectedFeed = feed
+                            }
+                        }
+                    }
+                    DrawerPane {
+                        feedItems.forEach { dataFeed ->
+                            FeedRowItem(
+                                FeedItem(
+                                    dataFeed.hashCode(),
+                                    dataFeed.title,
+                                    dataFeed.description.take(100)
+                                ),
+                                selectedFeedItem?.id == dataFeed.id
+                            ) {
+                                selectedFeedItem = dataFeed
+                            }
+                        }
+                    }
                     ContentPane(scaffoldState.snackbarHostState, selectedFeedItem)
                 }
             }
         }
     }
 }
+

@@ -3,6 +3,7 @@ package dev.patbeagan.ui
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -37,6 +38,9 @@ fun ContentPane(
             Modifier
                 .fillMaxSize()
                 .background(Color.Red)
+                .padding(4.dp)
+                .background(Color.White, shape = RoundedCornerShape(4.dp))
+                .padding(4.dp)
                 .verticalScroll(scrollState)
         ) {
             Text("Content pane")
