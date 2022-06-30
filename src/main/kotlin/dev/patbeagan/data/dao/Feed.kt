@@ -7,6 +7,7 @@ import org.jetbrains.exposed.dao.id.IntIdTable
 
 class Feed(id: EntityID<Int>) : IntEntity(id) {
     var title: String by FeedTable.title
+    var source: String by FeedTable.rssSource
     var description: String? by FeedTable.description
     val feedItem: List<FeedItem>
         get() = FeedItem.find {
@@ -15,6 +16,7 @@ class Feed(id: EntityID<Int>) : IntEntity(id) {
 
     object FeedTable : IntIdTable() {
         val title = varchar("title", 100)
+        val rssSource = varchar("source", 200)
         val description = varchar("description", 100)
             .nullable()
             .default(null)
