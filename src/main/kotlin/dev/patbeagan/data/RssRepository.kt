@@ -10,3 +10,4 @@ class RssRepository(
     suspend fun fetchBasic() = rssRemoteDataSource.fetchBasic(url)
     suspend fun fetchRss(): SyndFeed = rssRemoteDataSource.fetchRss(url)
 }
+

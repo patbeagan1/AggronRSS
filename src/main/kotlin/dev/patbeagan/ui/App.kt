@@ -64,7 +64,7 @@ fun App() {
                     DrawerPane(modifier = Modifier.background(Color.Green)) {
                         feeds.forEach { feed ->
                             FeedRowItem(
-                                FeedItem(
+                                dev.patbeagan.ui.state.FeedItem(
                                     feed.hashCode(),
                                     feed.title,
                                     feed.description ?: "NONE"
@@ -78,7 +78,7 @@ fun App() {
                     DrawerPane {
                         feedItems.forEach { dataFeed ->
                             FeedRowItem(
-                                FeedItem(
+                                dev.patbeagan.ui.state.FeedItem(
                                     dataFeed.hashCode(),
                                     dataFeed.title,
                                     dataFeed.description.take(100)

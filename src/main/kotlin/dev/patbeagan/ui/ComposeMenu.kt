@@ -1,4 +1,4 @@
-package dev.patbeagan.main.ui
+package dev.patbeagan.ui
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background

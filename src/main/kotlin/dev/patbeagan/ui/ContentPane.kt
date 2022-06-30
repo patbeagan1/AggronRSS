@@ -43,22 +43,24 @@ fun ContentPane(
                 .padding(4.dp)
                 .verticalScroll(scrollState)
         ) {
-            Text("Content pane")
-
-            Text(selectedContent?.description ?: "NONE")
-
-            Button(
-                shape = RoundedCornerShape(percent = 25),
-                content = {
-                    Icon(Icons.Rounded.Info, "info")
-                    Text("Hello world")
-                },
-                onClick = {
-                    scope.launch {
-                        snackbarHostState.showSnackbar("Clicked the button")
+            selectedContent?.let { feedItem ->
+                Text(feedItem.title)
+                Text(feedItem.description)
+            } ?: run {
+                Text("Select Content to continue")
+                Button(
+                    shape = RoundedCornerShape(percent = 25),
+                    content = {
+                        Icon(Icons.Rounded.Info, "info")
+                        Text("Hello world")
+                    },
+                    onClick = {
+                        scope.launch {
+                            snackbarHostState.showSnackbar("Clicked the button")
+                        }
                     }
-                }
-            )
+                )
+            }
         }
     }
 }

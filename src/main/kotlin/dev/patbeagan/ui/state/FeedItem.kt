@@ -1,4 +1,4 @@
-package dev.patbeagan.ui
+package dev.patbeagan.ui.state
 
 data class FeedItem(
     val id: Int,
