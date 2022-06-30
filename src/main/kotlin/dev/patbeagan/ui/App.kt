@@ -22,7 +22,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.ExperimentalUnitApi
 import dev.patbeagan.data.dao.Feed
 import dev.patbeagan.data.dao.FeedItem
-import dev.patbeagan.main.LocalViewModel
 import kotlinx.coroutines.launch
 import org.jetbrains.exposed.sql.transactions.transaction
 
@@ -36,12 +35,10 @@ fun App() {
     var selectedFeed by remember { mutableStateOf<Feed?>(null) }
     var selectedFeedItem by remember { mutableStateOf<FeedItem?>(null) }
     val scope = rememberCoroutineScope()
-    val repo = LocalViewModel.current.repo
+
     scope.launch {
-//        repo.fetch("https://patbeagan.dev/feed-old.xml")
         transaction {
             feeds = Feed.all().toList()
-            
         }
     }
     LaunchedEffect(selectedFeed) {

@@ -16,7 +16,7 @@ class Feed(id: EntityID<Int>) : IntEntity(id) {
 
     object FeedTable : IntIdTable() {
         val title = varchar("title", 100)
-        val rssSource = varchar("source", 200)
+        val rssSource = varchar("source", 200).default("None")
         val description = varchar("description", 100)
             .nullable()
             .default(null)
