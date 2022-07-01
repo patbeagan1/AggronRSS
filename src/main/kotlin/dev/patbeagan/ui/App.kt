@@ -12,6 +12,7 @@ import androidx.compose.material.SnackbarHost
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -20,10 +21,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.ExperimentalUnitApi
+import dev.patbeagan.data.AggronRepository
 import dev.patbeagan.data.dao.Feed
 import dev.patbeagan.data.dao.FeedItem
 import kotlinx.coroutines.launch
-import org.jetbrains.exposed.sql.transactions.transaction
 
 @ExperimentalUnitApi
 @Composable
@@ -35,19 +36,14 @@ fun App() {
     var selectedFeed by remember { mutableStateOf<Feed?>(null) }
     var selectedFeedItem by remember { mutableStateOf<FeedItem?>(null) }
     val scope = rememberCoroutineScope()
+    val repository by remember { derivedStateOf { AggronRepository() } }
 
     scope.launch {
-        transaction {
-            feeds = Feed.all().toList()
-        }
+        feeds = repository.getAllFeeds()
     }
     LaunchedEffect(selectedFeed) {
         selectedFeed?.let {
-            transaction {
-                feedItems = FeedItem.find {
-                    FeedItem.FeedItemTable.feed eq it.id
-                }.toList()
-            }
+            feedItems = repository.findItemsForFeed(it)
         }
     }
     MaterialTheme {

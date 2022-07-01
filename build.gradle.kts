@@ -63,3 +63,20 @@ compose.desktop {
         }
     }
 }
+
+tasks.withType(KotlinCompile::class.java).configureEach {
+    kotlinOptions {
+        if (project.findProperty("aggron.enableComposeCompilerReports") == "true") {
+            freeCompilerArgs = freeCompilerArgs + listOf(
+                "-P",
+                "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=" +
+                        project.buildDir.absolutePath + "/compose_metrics"
+            )
+            freeCompilerArgs = freeCompilerArgs + listOf(
+                "-P",
+                "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=" +
+                        project.buildDir.absolutePath + "/compose_metrics"
+            )
+        }
+    }
+}
