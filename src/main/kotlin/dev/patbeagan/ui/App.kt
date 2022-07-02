@@ -22,19 +22,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.ExperimentalUnitApi
 import dev.patbeagan.data.AggronRepository
-import dev.patbeagan.data.dao.Feed
-import dev.patbeagan.data.dao.FeedItem
+import dev.patbeagan.domain.entity.FeedEntity
+import dev.patbeagan.domain.entity.FeedItemEntity
 import kotlinx.coroutines.launch
 
 @ExperimentalUnitApi
 @Composable
 @Preview
 fun App() {
-    var feeds by remember { mutableStateOf(listOf<Feed>()) }
-    var feedItems by remember { mutableStateOf(listOf<FeedItem>()) }
+    var feeds by remember { mutableStateOf(listOf<FeedEntity>()) }
+    var feedItems by remember { mutableStateOf(listOf<FeedItemEntity>()) }
     val scaffoldState = rememberScaffoldState()
-    var selectedFeed by remember { mutableStateOf<Feed?>(null) }
-    var selectedFeedItem by remember { mutableStateOf<FeedItem?>(null) }
+    var selectedFeed by remember { mutableStateOf<Int?>(null) }
+    var selectedFeedItem by remember { mutableStateOf<FeedItemEntity?>(null) }
     val scope = rememberCoroutineScope()
     val repository by remember { derivedStateOf { AggronRepository() } }
 
@@ -42,9 +42,7 @@ fun App() {
         feeds = repository.getAllFeeds()
     }
     LaunchedEffect(selectedFeed) {
-        selectedFeed?.let {
-            feedItems = repository.findItemsForFeed(it)
-        }
+        feedItems = repository.findItemsForFeed(selectedFeed)
     }
     MaterialTheme {
         Scaffold(
@@ -66,9 +64,9 @@ fun App() {
                                     feed.title,
                                     feed.description ?: "NONE"
                                 ),
-                                selectedFeed?.id == feed.id
+                                selectedFeed == feed.id
                             ) {
-                                selectedFeed = feed
+                                selectedFeed = feed.id
                             }
                         }
                     }
@@ -80,7 +78,7 @@ fun App() {
                                     dataFeed.title,
                                     dataFeed.description.take(100)
                                 ),
-                                selectedFeedItem?.id == dataFeed.id
+                                selectedFeedItem == dataFeed
                             ) {
                                 selectedFeedItem = dataFeed
                             }

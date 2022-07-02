@@ -7,12 +7,14 @@ import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
 
 object DatabaseConfig {
-    fun init() = sqlite.apply {
-        transaction {
-            SchemaUtils.create(
-                Feed.FeedTable,
-                FeedItem.FeedItemTable
-            )
+    fun init() {
+        sqlite.apply {
+            transaction {
+                SchemaUtils.create(
+                    Feed.FeedTable,
+                    FeedItem.FeedItemTable
+                )
+            }
         }
     }
 

@@ -20,12 +20,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import dev.patbeagan.data.dao.FeedItem
+import dev.patbeagan.domain.entity.FeedItemEntity
 import kotlinx.coroutines.launch
 
 @Composable
 fun ContentPane(
     snackbarHostState: SnackbarHostState,
-    selectedContent: FeedItem?,
+    selectedContent: FeedItemEntity?,
 ) {
     val scrollState = rememberScrollState()
     val scope = rememberCoroutineScope()

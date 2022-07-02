@@ -18,3 +18,4 @@ class FeedItem(id: EntityID<Int>) : IntEntity(id) {
 
     companion object : IntEntityClass<FeedItem>(FeedItemTable)
 }
+

@@ -1,4 +1,4 @@
-package dev.patbeagan.domain
+package dev.patbeagan.data.transforms
 
 import com.sun.syndication.feed.synd.SyndContentImpl
 import com.sun.syndication.feed.synd.SyndEntry

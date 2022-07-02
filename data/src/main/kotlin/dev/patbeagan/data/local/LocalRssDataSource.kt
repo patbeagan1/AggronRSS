@@ -5,7 +5,7 @@ import com.sun.syndication.feed.synd.SyndFeed
 import dev.patbeagan.data.dao.Feed
 import dev.patbeagan.data.dao.FeedItem
 import dev.patbeagan.data.CacheRepository
-import dev.patbeagan.domain.ConvertFeedToSyndFeedUseCase
+import dev.patbeagan.data.transforms.ConvertFeedToSyndFeedUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.jetbrains.exposed.sql.transactions.transaction

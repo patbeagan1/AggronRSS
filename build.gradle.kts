@@ -32,18 +32,10 @@ dependencies {
     implementation("com.h2database:h2:2.1.212")
     implementation("org.xerial:sqlite-jdbc:3.36.0.3")
     implementation("rome:rome:1.0")
+    implementation(project(":data"))
+    implementation(project(":domain"))
 }
-val ktor_version: String by project
-dependencies {
-    implementation("io.ktor:ktor-client-core:$ktor_version")
-    implementation("io.ktor:ktor-client-cio:$ktor_version")
-}
-val exposedVersion: String by project
-dependencies {
-    implementation("org.jetbrains.exposed:exposed-core:$exposedVersion")
-    implementation("org.jetbrains.exposed:exposed-dao:$exposedVersion")
-    implementation("org.jetbrains.exposed:exposed-jdbc:$exposedVersion")
-}
+
 
 tasks.test {
     useJUnit()
