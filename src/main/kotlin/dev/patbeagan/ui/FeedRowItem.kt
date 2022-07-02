@@ -23,11 +23,15 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
-import dev.patbeagan.ui.state.FeedItem
+import dev.patbeagan.ui.state.FeedItemUiState
 
 @ExperimentalUnitApi
 @Composable
-fun FeedRowItem(item: FeedItem, isSelected: Boolean, setSelected: (FeedItem) -> Unit) {
+fun FeedRow(
+    item: FeedItemUiState,
+    isSelected: Boolean,
+    setSelected: (FeedItemUiState) -> Unit,
+) {
     val interactionSource = remember { MutableInteractionSource() }
     val isHovered by interactionSource.collectIsHoveredAsState()
     val shape = RoundedCornerShape(Dp(10f))

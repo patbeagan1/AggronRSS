@@ -4,8 +4,8 @@ import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version Deps.Version.kotlin
-    id("org.jetbrains.compose") version Deps.Version.compose
+    kotlin("jvm") version "1.6.10"
+    id("org.jetbrains.compose") version "1.1.0"
 }
 
 group = "dev.patbeagan"

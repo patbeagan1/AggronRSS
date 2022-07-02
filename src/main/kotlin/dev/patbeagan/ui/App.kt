@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.ExperimentalUnitApi
 import dev.patbeagan.data.AggronRepository
 import dev.patbeagan.domain.entity.FeedEntity
 import dev.patbeagan.domain.entity.FeedItemEntity
-import dev.patbeagan.ui.state.FeedItem
+import dev.patbeagan.ui.state.FeedItemUiState
 import kotlinx.coroutines.launch
 
 @ExperimentalUnitApi
@@ -62,8 +62,8 @@ fun App() {
                 ) {
                     DrawerPane(modifier = Modifier.background(Color.Green)) {
                         feeds.forEach { feed ->
-                            FeedRowItem(
-                                FeedItem(
+                            FeedRow(
+                                FeedItemUiState(
                                     feed.hashCode(),
                                     feed.title,
                                     feed.description ?: "NONE"
@@ -76,8 +76,8 @@ fun App() {
                     }
                     DrawerPane {
                         feedItems.forEach { dataFeed ->
-                            FeedRowItem(
-                                FeedItem(
+                            FeedRow(
+                                FeedItemUiState(
                                     dataFeed.hashCode(),
                                     dataFeed.title,
                                     dataFeed.description.take(100)
