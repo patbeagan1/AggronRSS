@@ -24,17 +24,21 @@ import androidx.compose.ui.unit.ExperimentalUnitApi
 import dev.patbeagan.data.AggronRepository
 import dev.patbeagan.domain.entity.FeedEntity
 import dev.patbeagan.domain.entity.FeedItemEntity
+import dev.patbeagan.ui.state.FeedItem
 import kotlinx.coroutines.launch
 
 @ExperimentalUnitApi
 @Composable
 @Preview
 fun App() {
+    val scaffoldState = rememberScaffoldState()
+
     var feeds by remember { mutableStateOf(listOf<FeedEntity>()) }
     var feedItems by remember { mutableStateOf(listOf<FeedItemEntity>()) }
-    val scaffoldState = rememberScaffoldState()
+
     var selectedFeed by remember { mutableStateOf<Int?>(null) }
     var selectedFeedItem by remember { mutableStateOf<FeedItemEntity?>(null) }
+
     val scope = rememberCoroutineScope()
     val repository by remember { derivedStateOf { AggronRepository() } }
 
@@ -59,7 +63,7 @@ fun App() {
                     DrawerPane(modifier = Modifier.background(Color.Green)) {
                         feeds.forEach { feed ->
                             FeedRowItem(
-                                dev.patbeagan.ui.state.FeedItem(
+                                FeedItem(
                                     feed.hashCode(),
                                     feed.title,
                                     feed.description ?: "NONE"
@@ -73,7 +77,7 @@ fun App() {
                     DrawerPane {
                         feedItems.forEach { dataFeed ->
                             FeedRowItem(
-                                dev.patbeagan.ui.state.FeedItem(
+                                FeedItem(
                                     dataFeed.hashCode(),
                                     dataFeed.title,
                                     dataFeed.description.take(100)
