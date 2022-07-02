@@ -1,10 +1,11 @@
+import dev.patbeagan.buildsrc.Deps
 import org.jetbrains.compose.compose
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.6.10"
-    id("org.jetbrains.compose") version "1.1.0"
+    kotlin("jvm") version Deps.Version.kotlin
+    id("org.jetbrains.compose") version Deps.Version.compose
 }
 
 group = "dev.patbeagan"
@@ -28,14 +29,13 @@ repositories {
 dependencies {
     testImplementation(kotlin("test"))
     implementation(compose.desktop.currentOs)
-    implementation("dev.patbeagan1:protocol-rss:0.3.1")
-    implementation("com.h2database:h2:2.1.212")
-    implementation("org.xerial:sqlite-jdbc:3.36.0.3")
-    implementation("rome:rome:1.0")
+    implementation(Deps.protocolRss)
+    implementation(Deps.h2)
+    implementation(Deps.sqlite)
+    implementation(Deps.rome)
     implementation(project(":data"))
     implementation(project(":domain"))
 }
-
 
 tasks.test {
     useJUnit()

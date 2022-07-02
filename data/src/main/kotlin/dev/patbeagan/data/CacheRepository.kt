@@ -7,14 +7,12 @@ class CacheRepository<T>(
     private val remote: Remote<T>,
     private val local: Local<T>,
 ) {
-    suspend fun fetch(url: String, checkExpiry: () -> Boolean = { true }): T {
-        if (checkExpiry()) {
-            Logger.getGlobal().log(Level.INFO, "Remote $url")
-            return remote.fetch(url).also { local.store(it) }
-        } else {
-            Logger.getGlobal().log(Level.INFO, "Local $url")
-            return local.fetch(url)
-        }
+    suspend fun fetch(url: String, checkExpiry: () -> Boolean = { true }): T = if (checkExpiry()) {
+        Logger.getGlobal().log(Level.INFO, "Remote $url")
+        remote.fetch(url).also { local.store(it) }
+    } else {
+        Logger.getGlobal().log(Level.INFO, "Local $url")
+        local.fetch(url)
     }
 
     interface Remote<T> {
